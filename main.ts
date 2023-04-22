@@ -1,4 +1,5 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.InBackground)
     projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -24,6 +25,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile.setFlag(SpriteFlag.DestroyOnWall, false)
     pause(100)
     projectile.setKind(SpriteKind.Projectile)
+    projectile.lifespan = 2000
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     game.gameOver(false)
@@ -44,6 +46,7 @@ function CreateEnemy (Col: number, Row: number, Vx: number, Vy: number) {
     mySprite2.setBounceOnWall(true)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    music.play(music.melodyPlayable(music.zapped), music.PlaybackMode.InBackground)
     sprites.destroy(sprite, effects.disintegrate, 500)
     sprites.destroy(otherSprite, effects.ashes, 500)
     info.changeScoreBy(1)
